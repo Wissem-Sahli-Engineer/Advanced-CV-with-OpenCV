@@ -14,6 +14,16 @@ handLandmarker = mp.tasks.vision.HandLandmarker
 handLandmarkerOptions = mp.tasks.vision.HandLandmarkerOptions
 VisionRunningMode = mp.tasks.vision.RunningMode
 
+# custom styles
+
+custom_dots = drawing_utils.DrawingSpec(color=(255, 0, 0),
+                                        thickness=5, 
+                                        circle_radius=4
+                                        )
+
+custom_lines = drawing_utils.DrawingSpec(color=(0, 255, 0), 
+                                        thickness=5
+                                        )
 
 # Configuration
 options = handLandmarkerOptions(
@@ -50,6 +60,9 @@ with handLandmarker.create_from_options(options) as landmarker:
                 drawing_utils.draw_landmarks(
                     img,
                     hand,
+                    mp.tasks.vision.HandLandmarksConnections.HAND_CONNECTIONS,
+                    landmark_drawing_spec=custom_dots,
+                    connection_drawing_spec=custom_lines,
                 )
             
 
