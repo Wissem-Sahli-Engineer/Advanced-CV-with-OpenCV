@@ -5,6 +5,7 @@ import mediapipe as mp
 from pathlib import Path
 # pyrefly: ignore [missing-import]
 from mediapipe.tasks.python.vision import drawing_utils
+import time
 
 cap = cv2.VideoCapture(0)
 
@@ -33,6 +34,11 @@ options = handLandmarkerOptions(
     min_hand_detection_confidence=0.5
 )
 
+# calculation the fps 1
+pTime = 0
+cTime = 0
+
+
 with handLandmarker.create_from_options(options) as landmarker:
 
     frame_count = 0
@@ -57,6 +63,10 @@ with handLandmarker.create_from_options(options) as landmarker:
 
         if res.hand_landmarks:
             for hand in res.hand_landmarks:
+                
+                for id , lm in enumerate(hand):
+                    print(id,lm)
+
                 drawing_utils.draw_landmarks(
                     img,
                     hand,
@@ -64,12 +74,23 @@ with handLandmarker.create_from_options(options) as landmarker:
                     landmark_drawing_spec=custom_dots,
                     connection_drawing_spec=custom_lines,
                 )
-            
+        
+        # flipping the image Y-AXIS : 
+        img = cv2.flip(img,1)
+
+        # calculation the fps 2
+        cTime = time.time()
+        fps = 1/(cTime - pTime)
+        pTime = cTime
+
+        cv2.putText(img,str(int(fps)),
+                    (10,70),
+                    cv2.FONT_HERSHEY_PLAIN,
+                    3,(255,0,255),3)
 
         # print(res.hand_landmarks, "\n")
 
         # display
-        img = cv2.flip(img,1)
         cv2.imshow('live',cv2.cvtColor(img,cv2.COLOR_RGB2BGR))
         if cv2.waitKey(1) & 0xFF ==ord('q'):
             break
