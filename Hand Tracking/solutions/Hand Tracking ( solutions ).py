@@ -1,3 +1,14 @@
+"""
+Imoortant !
+
+Since Google has decided to remove the Solutions API, 
+this code will not run unless you are using an older version of MediaPipe 
+(and possibly an older version of Python as well).
+
+
+"""
+
+
 # pyrefly: ignore [missing-import]
 import cv2
 # pyrefly: ignore [missing-import]
