@@ -40,19 +40,12 @@ def main(landmarker,stop =" ",):
 
         res = landmarker.landmarker.detect_for_video(mp_img,timestamp_ms)
 
-        if res.hand_landmarks:
-            for hand in res.hand_landmarks:
-                for id , lm in enumerate(hand):
-                    h, w, c = img.shape
-                    cx, cy = int(lm.x*w) , int(lm.y*h)
 
-                    drawing_utils.draw_landmarks(
-                        img,
-                        hand,
-                        mp.tasks.vision.HandLandmarksConnections.HAND_CONNECTIONS,
-                        landmark_drawing_spec=custom_dots,
-                        connection_drawing_spec=custom_lines,
-                    )
+        print(landmarker.findHands(img,res, draw =True)[8])
+        cx , cy = landmarker.findHands(img ,res, draw=True)[8][1],landmarker.findHands(img ,res, draw=True)[8][2]
+        if cx != '' and cy != '':
+            img = cv2.circle(img, (cx,cy),25,(201,97,48),cv2.FILLED)
+
 
         # display
         cv2.imshow('live',cv2.cvtColor(img,cv2.COLOR_RGB2BGR))
@@ -65,4 +58,4 @@ def main(landmarker,stop =" ",):
 
 if __name__ == "__main__":
     landmarker = handDetector()
-    main(landmarker," ") 
+    main(landmarker," ")

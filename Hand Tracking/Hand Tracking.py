@@ -80,9 +80,6 @@ with handLandmarker.create_from_options(options) as landmarker:
 
                     if id % 4 == 0 and id>0:
                         cv2.circle(img, (cx,cy),25,(201,97,48),cv2.FILLED)
-
-                    if id == 8 :
-                        img = cv2.line(img, (cx,cy),(cx+1,cy+1),(0,0,0), 10)
                 
                 drawing_utils.draw_landmarks(
                     img,

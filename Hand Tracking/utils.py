@@ -18,6 +18,7 @@ custom_lines = drawing_utils.DrawingSpec(color=(0, 255, 0),
                                         )
 
 class handDetector():
+
     def __init__(self, 
                 model_path='hand_landmarker.task', 
                 num_hands = 4,
@@ -42,6 +43,34 @@ class handDetector():
         # Build 
         self.landmarker = self.handLandmarker.create_from_options(self.options)
 
+    def findHands(self,img,res, draw=True):
+
+        all_hands = []
+        if res.hand_landmarks:
+            for hand in res.hand_landmarks:
+
+                if draw :
+                    drawing_utils.draw_landmarks(
+                        img,
+                        hand,
+                        mp.tasks.vision.HandLandmarksConnections.HAND_CONNECTIONS,
+                        landmark_drawing_spec=custom_dots,
+                        connection_drawing_spec=custom_lines,
+                        )
+
+                lmList = []
+                for id , lm in enumerate(hand):
+                    h, w, c = img.shape
+                    cx, cy = int(lm.x*w) , int(lm.y*h)
+                    lmList.append([id,cx,cy])
+
+            all_hands.append(lmList)
+
+        if all_hands == []:
+            for i in range(20):
+                all_hands.append(['','',''])
+
+        return all_hands
 
 def get_fps(cap, pTime,type='default'):
     if type == "default":
