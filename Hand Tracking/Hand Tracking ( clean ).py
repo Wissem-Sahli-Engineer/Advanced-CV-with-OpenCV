@@ -40,8 +40,9 @@ def main(landmarker,stop =" ",):
 
         res = landmarker.landmarker.detect_for_video(mp_img,timestamp_ms)
 
-        lmList = landmarker.findHands(img,res, draw =True,draw_finger=12)
+        lmList = landmarker.findHands(img,res, draw =True,draw_finger=8,coor_finger = 8)
 
+        print(lmList)
 
         # display
         cv2.imshow('live',cv2.cvtColor(img,cv2.COLOR_RGB2BGR))

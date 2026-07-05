@@ -43,7 +43,7 @@ class handDetector():
         # Build 
         self.landmarker = self.handLandmarker.create_from_options(self.options)
 
-    def findHands(self,img,res, draw=True, draw_finger=-1):
+    def findHands(self,img,res, draw=True, draw_finger=-1, coor_finger=-1):
 
         all_hands = []
         if res.hand_landmarks:
@@ -72,6 +72,17 @@ class handDetector():
                 if len(all_hands) != 0:
                     cx , cy = hand[draw_finger][1],hand[draw_finger][2]
                     img = cv2.circle(img, (cx,cy),25,(201,97,48),cv2.FILLED)
+        
+        if coor_finger != -1 :
+            i=1
+            fingerList = []
+
+            for hand in all_hands :
+                if len(all_hands) != 0:
+                    cx , cy = hand[coor_finger][1],hand[coor_finger][2]
+                    fingerList.append(['Hand '+str(i),cx,cy])
+                    i += 1
+            return fingerList
         
         return all_hands
 
