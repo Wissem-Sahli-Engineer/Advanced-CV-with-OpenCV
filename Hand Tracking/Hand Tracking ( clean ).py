@@ -40,16 +40,7 @@ def main(landmarker,stop =" ",):
 
         res = landmarker.landmarker.detect_for_video(mp_img,timestamp_ms)
 
-        lmList = landmarker.findHands(img,res, draw =True)
-
-        if len(lmList) != 0:
-            print(lmList)
-
-            for hand in lmList:
-
-                cx , cy = hand[8][1],hand[8][2]
-                
-                img = cv2.circle(img, (cx,cy),25,(201,97,48),cv2.FILLED)
+        lmList = landmarker.findHands(img,res, draw =True,draw_finger=12)
 
 
         # display

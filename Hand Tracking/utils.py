@@ -43,7 +43,7 @@ class handDetector():
         # Build 
         self.landmarker = self.handLandmarker.create_from_options(self.options)
 
-    def findHands(self,img,res, draw=True):
+    def findHands(self,img,res, draw=True, draw_finger=-1):
 
         all_hands = []
         if res.hand_landmarks:
@@ -65,7 +65,14 @@ class handDetector():
                     lmList.append([id,cx,cy])
 
                 all_hands.append(lmList)
+        
+        if draw_finger != -1 :
+            for hand in all_hands :
 
+                if len(all_hands) != 0:
+                    cx , cy = hand[draw_finger][1],hand[draw_finger][2]
+                    img = cv2.circle(img, (cx,cy),25,(201,97,48),cv2.FILLED)
+        
         return all_hands
 
 def get_fps(cap, pTime,type='default'):
