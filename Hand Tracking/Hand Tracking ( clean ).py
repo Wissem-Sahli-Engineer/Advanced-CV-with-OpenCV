@@ -48,9 +48,8 @@ def main(landmarker,stop =" ",):
             for hand in lmList:
 
                 cx , cy = hand[8][1],hand[8][2]
-
-                if cx != '' and cy != '':
-                    img = cv2.circle(img, (cx,cy),25,(201,97,48),cv2.FILLED)
+                
+                img = cv2.circle(img, (cx,cy),25,(201,97,48),cv2.FILLED)
 
 
         # display

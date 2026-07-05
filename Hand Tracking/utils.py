@@ -64,8 +64,8 @@ class handDetector():
                     cx, cy = int(lm.x*w) , int(lm.y*h)
                     lmList.append([id,cx,cy])
 
-            all_hands.append(lmList)
-            
+                all_hands.append(lmList)
+
         return all_hands
 
 def get_fps(cap, pTime,type='default'):
