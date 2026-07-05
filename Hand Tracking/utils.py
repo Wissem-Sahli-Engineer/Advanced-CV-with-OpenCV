@@ -65,11 +65,7 @@ class handDetector():
                     lmList.append([id,cx,cy])
 
             all_hands.append(lmList)
-
-        if all_hands == []:
-            for i in range(20):
-                all_hands.append(['','',''])
-
+            
         return all_hands
 
 def get_fps(cap, pTime,type='default'):
