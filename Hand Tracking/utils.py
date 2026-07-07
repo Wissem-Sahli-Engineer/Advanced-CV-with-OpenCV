@@ -86,6 +86,7 @@ class handDetector():
         
         return all_hands
 
+# init " pTime = time.time() " before the While loop
 def get_fps(cap, pTime,type='default'):
     if type == "default":
         cTime = time.time()
