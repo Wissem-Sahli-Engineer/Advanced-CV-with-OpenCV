@@ -33,7 +33,7 @@ class handDetector():
         self.handLandmarker = mp.tasks.vision.HandLandmarker
         self.handLandmarkerOptions = mp.tasks.vision.HandLandmarkerOptions
         self.VisionRunningMode = mp.tasks.vision.RunningMode
-        # configuration options
+        # Options configuration
         self.options = self.handLandmarkerOptions(
             base_options=self.baseOptions(model_asset_path=self.model_path),
             running_mode=self.VisionRunningMode.VIDEO,  
