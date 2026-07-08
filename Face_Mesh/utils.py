@@ -8,13 +8,15 @@ from mediapipe.tasks.python.vision import drawing_utils
 import time
 
 
-class FaceDetector():
+class FaceMesh():
     def __init__(self,
-                model_path = "face_detection_full_range.tflite",
+                model_path = "face_landmarker.task",
+                num_faces = 4,
                 confidence = 0.5):
         
         # Arguments
         self.model_path = model_path
+        self.num_faces = num_faces
         self.confidence = confidence
 
         # APIs
@@ -27,8 +29,10 @@ class FaceDetector():
         self.Options = self.faceDetectorOptions(
             base_options = self.Baseoptions(model_asset_path=self.model_path),
             running_mode = self.VisionRunningMode.VIDEO,
-            min_detection_confidence = self.confidence,
-            min_suppression_threshold = self.confidence,
+            num_faces = self.num_faces,
+            min_face_presence_confidence = self.confidence,
+            min_face_detection_confidence = self.confidence,
+            min_tracking_confidence = self.confidence
         )
 
         # Build
@@ -53,27 +57,7 @@ class FaceDetector():
                                 (x1,y1-20), cv2.FONT_HERSHEY_PLAIN,
                                 8 , (0,255,0), 4)
 
-                if fancy_draw:
 
-                    t = 10  # Line thickness
-                    length = 50
-                    color = (0, 255, 0)
-
-                    # --- TOP LEFT CORNER ---
-                    cv2.line(img, (x1, y1), (x1 + length, y1), color, t)
-                    cv2.line(img, (x1, y1), (x1, y1 + length), color, t)
-
-                    # --- TOP RIGHT CORNER ---
-                    cv2.line(img, (x1 + w, y1), (x1 + w - length, y1), color, t)
-                    cv2.line(img, (x1 + w, y1), (x1 + w, y1 + length), color, t)
-
-                    # --- BOTTOM LEFT CORNER ---
-                    cv2.line(img, (x1, y1 + h), (x1 + length, y1 + h), color, t)
-                    cv2.line(img, (x1, y1 + h), (x1, y1 + h - length), color, t)
-
-                    # --- BOTTOM RIGHT CORNER ---
-                    cv2.line(img, (x1 + w, y1 + h), (x1 + w - length, y1 + h), color, t)
-                    cv2.line(img, (x1 + w, y1 + h), (x1 + w, y1 + h - length), color, t)
 
 
 
