@@ -47,7 +47,7 @@ class PoseDetector():
         # Build
         self.landmarker = self.poseLandmarker.create_from_options(self.Options)
 
-    def findPose(self,img,res, draw = True, ):
+    def findPose(self,img,res, draw = True, id = -1):
 
         h, w, c = img.shape
         AllPoses = []
@@ -70,8 +70,18 @@ class PoseDetector():
                     lmList.append([id,cx,cy])
                 
                 AllPoses.append(lmList)
-                
-        return AllPoses
+
+        if id != -1 :
+
+            coor = []
+            for id , pose in enumerate(AllPoses):
+                if len(AllPoses) != 0:
+                    cx , cy = pose[id][1] , pose[id][2]
+                    coor.append([id+1,cx,cy])
+
+            return coor
+
+        return AllPoses 
 
 
 # init " pTime = time.time() " before the While loop

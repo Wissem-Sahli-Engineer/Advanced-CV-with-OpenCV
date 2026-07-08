@@ -22,7 +22,7 @@ def main():
             break
 
         # preprocessing
-        
+
         fps , pTime = get_fps(cap,pTime)
 
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -34,7 +34,7 @@ def main():
 
         res = detector.landmarker.detect_for_video(mp_img, timestamp_ms)
 
-        pose_data = detector.findPose(img, res)
+        pose_data = detector.findPose(img, res,id = 14)
 
         print(pose_data)
 
