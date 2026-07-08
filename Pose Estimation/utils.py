@@ -8,6 +8,16 @@ from mediapipe.tasks.python.vision import drawing_utils
 import time
 
 
+class PoseDetector ():
+    def __init__(self,
+                model_path = "",
+                
+                confidence = 0.5):
+        pass
+    
+
+
+
 # init " pTime = time.time() " before the While loop
 def get_fps(cap, pTime,type='default'):
     if type == "default":
