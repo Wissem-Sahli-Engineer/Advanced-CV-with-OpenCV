@@ -55,13 +55,24 @@ class FaceMesh():
             for face in res.face_landmarks:
 
                 if draw :
-                    drawing_utils.draw_landmarks(
-                        img,
-                        face,
-                        mp.tasks.vision.FaceLandmarksConnections.FACE_LANDMARKS_TESSELATION,
-                        landmark_drawing_spec=custom_dots,
-                        connection_drawing_spec=custom_lines,
-                        )
+
+                    if draw == 1 : 
+                        drawing_utils.draw_landmarks(
+                            img,
+                            face,
+                            mp.tasks.vision.FaceLandmarksConnections.FACE_LANDMARKS_TESSELATION,
+                            landmark_drawing_spec=custom_dots,
+                            connection_drawing_spec=custom_lines,
+                            )
+
+                    if draw == 2 :
+                        drawing_utils.draw_landmarks(
+                            img,
+                            face,
+                            mp.tasks.vision.FaceLandmarksConnections.FACE_LANDMARKS_CONTOURS, 
+                            landmark_drawing_spec=None, 
+                            connection_drawing_spec=custom_lines
+                            )
 
                 lmList = []
                 for id , lm in enumerate(face):
