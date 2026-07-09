@@ -7,7 +7,15 @@ from pathlib import Path
 from mediapipe.tasks.python.vision import drawing_utils
 import time
 
+# custom styles
+custom_dots = drawing_utils.DrawingSpec(color=(255, 0, 0),
+                                        thickness=5, 
+                                        circle_radius=4
+                                        )
 
+custom_lines = drawing_utils.DrawingSpec(color=(0, 255, 0), 
+                                        thickness=5
+                                        )
 class FaceMesh():
     def __init__(self,
                 model_path = "face_landmarker.task",
@@ -21,12 +29,12 @@ class FaceMesh():
 
         # APIs
         self.Baseoptions = mp.tasks.BaseOptions
-        self.faceDetector = mp.tasks.vision.FaceDetector
-        self.faceDetectorOptions = mp.tasks.vision.FaceDetectorOptions
+        self.faceLandmarker = mp.tasks.vision.FaceLandmarker
+        self.faceLandmarkerOptions = mp.tasks.vision.FaceLandmarkerOptions
         self.VisionRunningMode = mp.tasks.vision.RunningMode
 
         #  Options configuration
-        self.Options = self.faceDetectorOptions(
+        self.Options = self.faceLandmarkerOptions(
             base_options = self.Baseoptions(model_asset_path=self.model_path),
             running_mode = self.VisionRunningMode.VIDEO,
             num_faces = self.num_faces,
@@ -36,26 +44,34 @@ class FaceMesh():
         )
 
         # Build
-        self.detector = self.faceDetector.create_from_options(self.Options)
+        self.detector = self.faceLandmarker.create_from_options(self.Options)
 
-    def findFace(self,img,res, draw = True, show_conf = False, fancy_draw = True):
+    def findFace(self,img,res, draw = True):
 
         h, w, c = img.shape
 
-        if res.detections :
-            for face in res.detections:
-                
-                bbox = face.bounding_box
+        all_faces = []
+        if res.face_landmarks :
+            for face in res.face_landmarks:
 
-                x1 , y1 , w , h = bbox.origin_x , int(bbox.origin_y * 0.8) , bbox.width , bbox.height + int(bbox.origin_y * 0.2)
+                if draw :
+                    drawing_utils.draw_landmarks(
+                        img,
+                        face,
+                        mp.tasks.vision.HandLandmarksConnections.HAND_CONNECTIONS,
+                        landmark_drawing_spec=custom_dots,
+                        connection_drawing_spec=custom_lines,
+                        )
 
-                if draw:
-                    cv2.rectangle(img , (x1, y1) , (x1+w , y1+h) , (0,255,0),2)
+                lmList = []
+                for id , lm in enumerate(face):
+                    h, w, c = img.shape
+                    cx, cy = int(lm.x*w) , int(lm.y*h)
+                    lmList.append([id,cx,cy])
 
-                if show_conf:
-                    cv2.putText(img,f'{int(face.categories[0].score * 100)}%',
-                                (x1,y1-20), cv2.FONT_HERSHEY_PLAIN,
-                                8 , (0,255,0), 4)
+                all_faces.append(lmList)
+
+        return all_faces
 
 
 

@@ -3,7 +3,7 @@ import cv2
 # pyrefly: ignore [missing-import]
 import mediapipe as mp
 import time
-from utils import get_fps, FaceDetector
+from utils import get_fps, FaceMesh
 
 
 
@@ -13,7 +13,7 @@ def main():
     pTime = time.time()
     frame_count = 0
 
-    detector = FaceDetector()
+    detector = FaceMesh()
 
     while True:
 
@@ -34,7 +34,9 @@ def main():
 
         res = detector.detector.detect_for_video(mp_img, timestamp_ms)
 
-        detector.findFace(img, res, show_conf = True)
+        data = detector.findFace(img, res)
+
+        print(data)
 
         # display
         cv2.putText(img,str(int(fps)),
