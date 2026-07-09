@@ -58,7 +58,7 @@ class FaceMesh():
                     drawing_utils.draw_landmarks(
                         img,
                         face,
-                        mp.tasks.vision.HandLandmarksConnections.HAND_CONNECTIONS,
+                        mp.tasks.vision.FaceLandmarksConnections.FACE_LANDMARKS_TESSELATION,
                         landmark_drawing_spec=custom_dots,
                         connection_drawing_spec=custom_lines,
                         )
