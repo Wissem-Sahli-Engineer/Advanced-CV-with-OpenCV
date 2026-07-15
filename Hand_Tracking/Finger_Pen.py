@@ -73,7 +73,7 @@ with handLandmarker.create_from_options(options) as landmarker:
             px, py = 0, 0
 
         combined_img = cv2.add(img, canvas)
-        
+
 
         cv2.imshow('live', cv2.cvtColor(combined_img, cv2.COLOR_RGB2BGR))
         if cv2.waitKey(1) & 0xFF == ord(' '):
